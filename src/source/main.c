@@ -1,6 +1,6 @@
 #include <stdlib.h>
-const int bytes[] = {0,0,0,0};
-int main(void) {
+const int bytes[] __attribute__((used)) = {0,0,0,0};
+__attribute__((used)) int main(void) {
 	for (unsigned i = 0; i < 800000; i++) {
         __asm__("nop");
     }

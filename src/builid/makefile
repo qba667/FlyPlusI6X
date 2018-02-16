@@ -58,9 +58,9 @@ fs-i6x.elf: $(OBJS) $(USER_OBJS)
 	@echo ' '
 fs-i6x.bin: fs-i6x.elf
 	@echo 'Invoking: Cross ARM GNU Create Flash Image'
-	arm-none-eabi-objcopy --update-section .firmware=org.bin "fs-i6x.elf"
-	arm-none-eabi-objcopy --set-section-flags .firmware=code,readonly,alloc "fs-i6x.elf"
-	arm-none-eabi-objcopy -O binary "fs-i6x.elf"  "fs-i6x.bin"
+	#arm-none-eabi-objcopy --update-section .interrupts=org.bin "fs-i6x.elf"
+	#arm-none-eabi-objcopy --set-section-flags .interrupts=code,readonly,alloc "fs-i6x.elf"
+	#arm-none-eabi-objcopy -O binary "fs-i6x.elf"  "fs-i6x.bin"
 	#python flysky2.py fs-i6.bin fs-i6
 	#python3 flysky3.py fs-i6x.bin fs-i6x
 	@echo 'Finished building: $@'

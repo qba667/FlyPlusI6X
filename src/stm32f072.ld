@@ -7,13 +7,14 @@ MEMORY
 
 SECTIONS
 {
-    .firmware :
-    {
-     __VECTOR_TABLE = .;
-     . = ALIGN(4);
-     KEEP(*(.oldCode))
+	  /* The startup code goes first into internal flash */
+	.interrupts :
+	{
+    __VECTOR_TABLE = .;
     . = ALIGN(4);
-    } > rom_org
+    KEEP(*(.isr_vector))     /* Startup code */
+    . = ALIGN(4);
+	} > rom_org
     .text : {
         . = ALIGN(4);
         *(.text)           /* .text sections (code) */
@@ -35,5 +36,6 @@ SECTIONS
 		*(.bss*)	/* Read-write zero initialized data */
 		*(COMMON)
     } >ram
+	
 }
 
