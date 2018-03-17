@@ -53,14 +53,14 @@ all: fs-i6x.elf secondary-outputs
 fs-i6x.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "../stm32f072.ld" -Xlinker --gc-sections -Wl,-Map,"fs-i6x.map" --specs=nano.specs -specs=nosys.specs -Xlinker -z -Xlinker muldefs -o "fs-i6x.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "../stm32f072.ld" -Xlinker --gc-sections -nodefaultlibs -nostartfiles -fno-builtin -nostdlib -lnosys -Wl,-Map,"fs-i6x.map" --specs=nano.specs -specs=nosys.specs -Xlinker -z -Xlinker muldefs -o "fs-i6x.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 fs-i6x.bin: fs-i6x.elf
 	@echo 'Invoking: Cross ARM GNU Create Flash Image'
-	#arm-none-eabi-objcopy --update-section .interrupts=org.bin "fs-i6x.elf"
-	#arm-none-eabi-objcopy --set-section-flags .interrupts=code,readonly,alloc "fs-i6x.elf"
-	#arm-none-eabi-objcopy -O binary "fs-i6x.elf"  "fs-i6x.bin"
+	arm-none-eabi-objcopy --update-section .firstSection=org.bin "fs-i6x.elf"
+	#arm-none-eabi-objcopy --set-section-flags .firstSection=code,readonly,alloc "fs-i6x.elf"
+	arm-none-eabi-objcopy  -j .firstSection -j .mod_* -j .text -j .rodata -O binary "fs-i6x.elf" "fs-i6x.bin"
 	#python flysky2.py fs-i6.bin fs-i6
 	#python3 flysky3.py fs-i6x.bin fs-i6x
 	@echo 'Finished building: $@'

@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
-
+/*
 #define ADC_VAL 0x20000F00
 #define ADC_READING 0x20000F24
 #define RX_BUFFER 0x20000EE4
@@ -153,7 +153,7 @@ __attribute__((section (".mod_MOD_SPACE.beepCheck"))) const intVoidFun beepCheck
 __attribute__((section (".mod_MOD_SPACE.checkCRC"))) const crcFun checkCRC = (crcFun)0xA021;
 __attribute__((section (".mod_MOD_SPACE.getCurrentTicks"))) const intVoidFun getCurrentTicks = (intVoidFun)0xA1B1;
 __attribute__((section (".mod_MOD_SPACE.someBeepCheck"))) const intVoidFun someBeepCheck = (intVoidFun)0x9BC1;
-
+*/
 
 /*
 __aeabi_uidiv 	  ROM 080000F0 0000002C 0000000C FFFFFFF4 R . L . . . .
