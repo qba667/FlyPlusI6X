@@ -52,6 +52,14 @@ SECTIONS
     }
     . = ALIGN(2);
 
+    .mod_ignoreChannelCount 0x08008B3C : {
+        *(.mod_ignoreChannelCount);
+        KEEP(*(.mod_ignoreChannelCount))
+    }
+    .mod_ignoreChannelCount2 0x08008BC0 : {
+        *(.mod_ignoreChannelCount2);
+        KEEP(*(.mod_ignoreChannelCount2))
+    }
     .mod_applySwitchesHook1 0x08008A7E : {
         *(.mod_applySwitchesHook1);
         KEEP(*(.mod_applySwitchesHook1))
@@ -64,6 +72,17 @@ SECTIONS
         *(.mod_applySwitchesHook3);
         KEEP(*(.mod_applySwitchesHook3))
     }
+    .mod_display6chperPage 0x0801691A : {
+        *(.mod_display6chperPage);
+        KEEP(*(.mod_display6chperPage))
+    }
+
+    .mod_loadSettingsHook 0x0800B548 : {
+        *(.mod_loadSettingsHook);
+        KEEP(*(.mod_loadSettingsHook))
+    }
+
+
 
     .text : {
         . = ALIGN(4);

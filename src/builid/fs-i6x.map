@@ -4,6 +4,7 @@ Common symbol       size              file
 
 reallocatedChannelsData2
                     0x1c              ./source/main.o
+modModelConfig      0x41c             ./source/settingsHack.o
 reallocatedChannelsData
                     0x1c              ./source/main.o
 
@@ -210,7 +211,7 @@ LOAD ./source/settingsHack.o
                 0x000000000800b548        0x4 ./source/loadSettingsHook.o
  *(.mod_loadSettingsHook)
 
-.text           0x000000000801bc10       0xc4
+.text           0x000000000801bc10       0xdc
                 0x000000000801bc10                . = ALIGN (0x4)
  *(.text)
  .text          0x000000000801bc10        0x0 ./source/start.o
@@ -238,33 +239,33 @@ LOAD ./source/settingsHack.o
                 0x000000000801bc94       0x34 ./source/channelsHack.o
                 0x000000000801bc94                applaySwitchesHook
  .text.loadSettingsHook
-                0x000000000801bcc8        0xc ./source/settingsHack.o
+                0x000000000801bcc8       0x24 ./source/settingsHack.o
                 0x000000000801bcc8                loadSettingsHook
  *(.text)
 
-.glue_7         0x000000000801bcd4        0x0
- .glue_7        0x000000000801bcd4        0x0 linker stubs
+.glue_7         0x000000000801bcec        0x0
+ .glue_7        0x000000000801bcec        0x0 linker stubs
 
-.glue_7t        0x000000000801bcd4        0x0
- .glue_7t       0x000000000801bcd4        0x0 linker stubs
+.glue_7t        0x000000000801bcec        0x0
+ .glue_7t       0x000000000801bcec        0x0 linker stubs
 
-.vfp11_veneer   0x000000000801bcd4        0x0
- .vfp11_veneer  0x000000000801bcd4        0x0 linker stubs
+.vfp11_veneer   0x000000000801bcec        0x0
+ .vfp11_veneer  0x000000000801bcec        0x0 linker stubs
 
-.v4_bx          0x000000000801bcd4        0x0
- .v4_bx         0x000000000801bcd4        0x0 linker stubs
+.v4_bx          0x000000000801bcec        0x0
+ .v4_bx         0x000000000801bcec        0x0 linker stubs
 
-.iplt           0x000000000801bcd4        0x0
- .iplt          0x000000000801bcd4        0x0 ./source/start.o
+.iplt           0x000000000801bcec        0x0
+ .iplt          0x000000000801bcec        0x0 ./source/start.o
 
-.rel.dyn        0x000000000801bcd4        0x0
- .rel.iplt      0x000000000801bcd4        0x0 ./source/start.o
+.rel.dyn        0x000000000801bcec        0x0
+ .rel.iplt      0x000000000801bcec        0x0 ./source/start.o
 
-.rodata         0x000000000801bcd4        0x0
-                0x000000000801bcd4                . = ALIGN (0x4)
+.rodata         0x000000000801bcec        0x0
+                0x000000000801bcec                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
-                0x000000000801bcd4                . = ALIGN (0x4)
+                0x000000000801bcec                . = ALIGN (0x4)
 
 .data           0x0000000020002990        0x0
                 0x0000000020002990                _data_start = .
@@ -274,7 +275,7 @@ LOAD ./source/settingsHack.o
 .igot.plt       0x0000000020002990        0x0
  .igot.plt      0x0000000020002990        0x0 ./source/start.o
 
-.bss            0x0000000020002990       0x38
+.bss            0x0000000020002990      0x454
                 0x0000000020002990                __START_BSS = .
                 0x0000000020002990                __bss_start__ = .
  *(.bss*)
@@ -282,8 +283,10 @@ LOAD ./source/settingsHack.o
  COMMON         0x0000000020002990       0x38 ./source/main.o
                 0x0000000020002990                reallocatedChannelsData2
                 0x00000000200029ac                reallocatedChannelsData
-                0x00000000200029c8                __bss_end__ = .
-                0x00000000200029c8                __END_BSS = .
+ COMMON         0x00000000200029c8      0x41c ./source/settingsHack.o
+                0x00000000200029c8                modModelConfig
+                0x0000000020002de4                __bss_end__ = .
+                0x0000000020002de4                __END_BSS = .
                 0x0000000020003990                __StackTop = 0x20003990
 OUTPUT(fs-i6x.elf elf32-littlearm)
 
@@ -321,7 +324,7 @@ OUTPUT(fs-i6x.elf elf32-littlearm)
  .comment       0x0000000000000038       0x39 ./source/channelsHack.o
  .comment       0x0000000000000038       0x39 ./source/settingsHack.o
 
-.debug_line     0x0000000000000000      0x557
+.debug_line     0x0000000000000000      0x558
  .debug_line    0x0000000000000000       0x45 ./source/start.o
  .debug_line    0x0000000000000045       0xa7 ./source/main.o
  .debug_line    0x00000000000000ec       0x1d ./source/ibus_telemetry.o
@@ -333,9 +336,9 @@ OUTPUT(fs-i6x.elf elf32-littlearm)
  .debug_line    0x00000000000003c3       0x4f ./source/igonreChannelCount2.o
  .debug_line    0x0000000000000412       0x4a ./source/disp6CHperPage.o
  .debug_line    0x000000000000045c       0x4c ./source/loadSettingsHook.o
- .debug_line    0x00000000000004a8       0xaf ./source/settingsHack.o
+ .debug_line    0x00000000000004a8       0xb0 ./source/settingsHack.o
 
-.debug_info     0x0000000000000000      0xadc
+.debug_info     0x0000000000000000      0xd45
  .debug_info    0x0000000000000000       0x53 ./source/start.o
  .debug_info    0x0000000000000053      0x230 ./source/main.o
  .debug_info    0x0000000000000283       0x64 ./source/ibus_telemetry.o
@@ -347,9 +350,9 @@ OUTPUT(fs-i6x.elf elf32-littlearm)
  .debug_info    0x0000000000000866       0x61 ./source/igonreChannelCount2.o
  .debug_info    0x00000000000008c7       0x5c ./source/disp6CHperPage.o
  .debug_info    0x0000000000000923       0x5e ./source/loadSettingsHook.o
- .debug_info    0x0000000000000981      0x15b ./source/settingsHack.o
+ .debug_info    0x0000000000000981      0x3c4 ./source/settingsHack.o
 
-.debug_abbrev   0x0000000000000000      0x3f0
+.debug_abbrev   0x0000000000000000      0x47a
  .debug_abbrev  0x0000000000000000       0x14 ./source/start.o
  .debug_abbrev  0x0000000000000014       0xc0 ./source/main.o
  .debug_abbrev  0x00000000000000d4       0x26 ./source/ibus_telemetry.o
@@ -361,7 +364,7 @@ OUTPUT(fs-i6x.elf elf32-littlearm)
  .debug_abbrev  0x0000000000000302       0x14 ./source/igonreChannelCount2.o
  .debug_abbrev  0x0000000000000316       0x14 ./source/disp6CHperPage.o
  .debug_abbrev  0x000000000000032a       0x14 ./source/loadSettingsHook.o
- .debug_abbrev  0x000000000000033e       0xb2 ./source/settingsHack.o
+ .debug_abbrev  0x000000000000033e      0x13c ./source/settingsHack.o
 
 .debug_aranges  0x0000000000000000      0x198
  .debug_aranges
@@ -394,15 +397,15 @@ OUTPUT(fs-i6x.elf elf32-littlearm)
  .debug_ranges  0x0000000000000010       0x30 ./source/channelsHack.o
  .debug_ranges  0x0000000000000040       0x10 ./source/settingsHack.o
 
-.debug_str      0x0000000000000000      0x39b
+.debug_str      0x0000000000000000      0x4c4
  .debug_str     0x0000000000000000      0x267 ./source/main.o
                                         0x2c2 (size before relaxing)
  .debug_str     0x0000000000000267       0x1b ./source/ibus_telemetry.o
                                         0x14d (size before relaxing)
  .debug_str     0x0000000000000282       0xa7 ./source/channelsHack.o
                                         0x34e (size before relaxing)
- .debug_str     0x0000000000000329       0x72 ./source/settingsHack.o
-                                        0x1ca (size before relaxing)
+ .debug_str     0x0000000000000329      0x19b ./source/settingsHack.o
+                                        0x32f (size before relaxing)
 
 .debug_frame    0x0000000000000000       0xd0
  .debug_frame   0x0000000000000000       0x28 ./source/main.o
