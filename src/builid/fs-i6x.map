@@ -33,8 +33,6 @@ Discarded input sections
                 0x0000000000000000        0x4 ./source/main.o
  .mod_channelsArrayRef6
                 0x0000000000000000        0x4 ./source/main.o
- .mod_maxChannels
-                0x0000000000000000        0x1 ./source/main.o
  .data          0x0000000000000000        0x0 ./source/ibus_telemetry.o
  .bss           0x0000000000000000        0x0 ./source/ibus_telemetry.o
  .data          0x0000000000000000        0x0 ./source/channelsHack.o
@@ -49,6 +47,23 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 ./source/applySwitchesHook2.o
  .data          0x0000000000000000        0x0 ./source/applySwitchesHook3.o
  .bss           0x0000000000000000        0x0 ./source/applySwitchesHook3.o
+ .data          0x0000000000000000        0x0 ./source/igonreChannelCount.o
+ .bss           0x0000000000000000        0x0 ./source/igonreChannelCount.o
+ .data          0x0000000000000000        0x0 ./source/igonreChannelCount2.o
+ .bss           0x0000000000000000        0x0 ./source/igonreChannelCount2.o
+ .data          0x0000000000000000        0x0 ./source/disp6CHperPage.o
+ .bss           0x0000000000000000        0x0 ./source/disp6CHperPage.o
+ .data          0x0000000000000000        0x0 ./source/loadSettingsHook.o
+ .bss           0x0000000000000000        0x0 ./source/loadSettingsHook.o
+ .data          0x0000000000000000        0x0 ./source/settingsHack.o
+ .bss           0x0000000000000000        0x0 ./source/settingsHack.o
+ .rodata.writeEEPROM
+                0x0000000000000000        0x4 ./source/settingsHack.o
+ .rodata.loadSettingsOrg
+                0x0000000000000000        0x4 ./source/settingsHack.o
+ .rodata.readEEPROM
+                0x0000000000000000        0x4 ./source/settingsHack.o
+ .rodata.crc    0x0000000000000000        0x4 ./source/settingsHack.o
 
 Memory Configuration
 
@@ -68,6 +83,11 @@ LOAD ./source/channelsHack.o
 LOAD ./source/applySwitchesHook1.o
 LOAD ./source/applySwitchesHook2.o
 LOAD ./source/applySwitchesHook3.o
+LOAD ./source/igonreChannelCount.o
+LOAD ./source/igonreChannelCount2.o
+LOAD ./source/disp6CHperPage.o
+LOAD ./source/loadSettingsHook.o
+LOAD ./source/settingsHack.o
 
 .firstSection   0x0000000008000000       0x10
                 0x0000000008000000                . = ALIGN (0x1)
@@ -77,17 +97,17 @@ LOAD ./source/applySwitchesHook3.o
                 0x0000000008000008                Reset_Handler
                 0x0000000008000010                . = ALIGN (0x1)
 
-.remove         0x0000000008004000       0xbc
+.remove         0x0000000008004000       0xac
  *(.remove)
  *(.remove*)
  .remove_main   0x0000000008004000        0xa ./source/main.o
                 0x0000000008004000                main
  *fill*         0x000000000800400a        0x2 
  .remove_channelsHack
-                0x000000000800400c       0xb0 ./source/channelsHack.o
+                0x000000000800400c       0xa0 ./source/channelsHack.o
                 0x000000000800400c                keepChannelHackReferences
  *(.remove)
-                0x00000000080040bc                . = ALIGN (0x1)
+                0x00000000080040ac                . = ALIGN (0x1)
 
 .mod_channelsArrayRef1
                 0x0000000008008bec        0x4
@@ -138,11 +158,22 @@ LOAD ./source/applySwitchesHook3.o
                 0x000000000800b93c        0x1 ./source/channelsHack.o
 
 .mod_maxChannels
-                0x000000000800e4ca        0x1
  *(.mod_maxChannels)
- .mod_maxChannels
-                0x000000000800e4ca        0x1 ./source/channelsHack.o
-                0x000000000800e4cc                . = ALIGN (0x2)
+                0x000000000800b93e                . = ALIGN (0x2)
+
+.mod_ignoreChannelCount
+                0x0000000008008b3c        0xc
+ *(.mod_ignoreChannelCount)
+ .mod_ignoreChannelCount
+                0x0000000008008b3c        0xc ./source/igonreChannelCount.o
+ *(.mod_ignoreChannelCount)
+
+.mod_ignoreChannelCount2
+                0x0000000008008bc0        0x2
+ *(.mod_ignoreChannelCount2)
+ .mod_ignoreChannelCount2
+                0x0000000008008bc0        0x2 ./source/igonreChannelCount2.o
+ *(.mod_ignoreChannelCount2)
 
 .mod_applySwitchesHook1
                 0x0000000008008a7e        0x4
@@ -165,7 +196,21 @@ LOAD ./source/applySwitchesHook3.o
                 0x000000000800aca2        0x4 ./source/applySwitchesHook3.o
  *(.mod_applySwitchesHook3)
 
-.text           0x000000000801bc10       0x7c
+.mod_display6chperPage
+                0x000000000801691a        0x2
+ *(.mod_display6chperPage)
+ .mod_display6chperPage
+                0x000000000801691a        0x2 ./source/disp6CHperPage.o
+ *(.mod_display6chperPage)
+
+.mod_loadSettingsHook
+                0x000000000800b548        0x4
+ *(.mod_loadSettingsHook)
+ .mod_loadSettingsHook
+                0x000000000800b548        0x4 ./source/loadSettingsHook.o
+ *(.mod_loadSettingsHook)
+
+.text           0x000000000801bc10       0xc4
                 0x000000000801bc10                . = ALIGN (0x4)
  *(.text)
  .text          0x000000000801bc10        0x0 ./source/start.o
@@ -175,40 +220,51 @@ LOAD ./source/applySwitchesHook3.o
  .text          0x000000000801bc10        0x0 ./source/applySwitchesHook1.o
  .text          0x000000000801bc10        0x0 ./source/applySwitchesHook2.o
  .text          0x000000000801bc10        0x0 ./source/applySwitchesHook3.o
+ .text          0x000000000801bc10        0x0 ./source/igonreChannelCount.o
+ .text          0x000000000801bc10        0x0 ./source/igonreChannelCount2.o
+ .text          0x000000000801bc10        0x0 ./source/disp6CHperPage.o
+ .text          0x000000000801bc10        0x0 ./source/loadSettingsHook.o
+ .text          0x000000000801bc10        0x0 ./source/settingsHack.o
  *(.text*)
  .text.getSensor2
                 0x000000000801bc10       0x24 ./source/channelsHack.o
                 0x000000000801bc10                getSensor2
  .text.mapSNR   0x000000000801bc34       0x38 ./source/channelsHack.o
                 0x000000000801bc34                mapSNR
+ .text.mapError
+                0x000000000801bc6c       0x28 ./source/channelsHack.o
+                0x000000000801bc6c                mapError
  .text.applaySwitchesHook
-                0x000000000801bc6c       0x20 ./source/channelsHack.o
-                0x000000000801bc6c                applaySwitchesHook
+                0x000000000801bc94       0x34 ./source/channelsHack.o
+                0x000000000801bc94                applaySwitchesHook
+ .text.loadSettingsHook
+                0x000000000801bcc8        0xc ./source/settingsHack.o
+                0x000000000801bcc8                loadSettingsHook
  *(.text)
 
-.glue_7         0x000000000801bc8c        0x0
- .glue_7        0x000000000801bc8c        0x0 linker stubs
+.glue_7         0x000000000801bcd4        0x0
+ .glue_7        0x000000000801bcd4        0x0 linker stubs
 
-.glue_7t        0x000000000801bc8c        0x0
- .glue_7t       0x000000000801bc8c        0x0 linker stubs
+.glue_7t        0x000000000801bcd4        0x0
+ .glue_7t       0x000000000801bcd4        0x0 linker stubs
 
-.vfp11_veneer   0x000000000801bc8c        0x0
- .vfp11_veneer  0x000000000801bc8c        0x0 linker stubs
+.vfp11_veneer   0x000000000801bcd4        0x0
+ .vfp11_veneer  0x000000000801bcd4        0x0 linker stubs
 
-.v4_bx          0x000000000801bc8c        0x0
- .v4_bx         0x000000000801bc8c        0x0 linker stubs
+.v4_bx          0x000000000801bcd4        0x0
+ .v4_bx         0x000000000801bcd4        0x0 linker stubs
 
-.iplt           0x000000000801bc8c        0x0
- .iplt          0x000000000801bc8c        0x0 ./source/start.o
+.iplt           0x000000000801bcd4        0x0
+ .iplt          0x000000000801bcd4        0x0 ./source/start.o
 
-.rel.dyn        0x000000000801bc8c        0x0
- .rel.iplt      0x000000000801bc8c        0x0 ./source/start.o
+.rel.dyn        0x000000000801bcd4        0x0
+ .rel.iplt      0x000000000801bcd4        0x0 ./source/start.o
 
-.rodata         0x000000000801bc8c        0x0
-                0x000000000801bc8c                . = ALIGN (0x4)
+.rodata         0x000000000801bcd4        0x0
+                0x000000000801bcd4                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
-                0x000000000801bc8c                . = ALIGN (0x4)
+                0x000000000801bcd4                . = ALIGN (0x4)
 
 .data           0x0000000020002990        0x0
                 0x0000000020002990                _data_start = .
@@ -247,41 +303,67 @@ OUTPUT(fs-i6x.elf elf32-littlearm)
                 0x00000000000000d2       0x21 ./source/applySwitchesHook2.o
  .ARM.attributes
                 0x00000000000000f3       0x21 ./source/applySwitchesHook3.o
+ .ARM.attributes
+                0x0000000000000114       0x21 ./source/igonreChannelCount.o
+ .ARM.attributes
+                0x0000000000000135       0x21 ./source/igonreChannelCount2.o
+ .ARM.attributes
+                0x0000000000000156       0x21 ./source/disp6CHperPage.o
+ .ARM.attributes
+                0x0000000000000177       0x21 ./source/loadSettingsHook.o
+ .ARM.attributes
+                0x0000000000000198       0x32 ./source/settingsHack.o
 
 .comment        0x0000000000000000       0x38
  .comment       0x0000000000000000       0x38 ./source/main.o
                                          0x39 (size before relaxing)
  .comment       0x0000000000000038       0x39 ./source/ibus_telemetry.o
  .comment       0x0000000000000038       0x39 ./source/channelsHack.o
+ .comment       0x0000000000000038       0x39 ./source/settingsHack.o
 
-.debug_line     0x0000000000000000      0x35b
+.debug_line     0x0000000000000000      0x557
  .debug_line    0x0000000000000000       0x45 ./source/start.o
  .debug_line    0x0000000000000045       0xa7 ./source/main.o
  .debug_line    0x00000000000000ec       0x1d ./source/ibus_telemetry.o
- .debug_line    0x0000000000000109      0x168 ./source/channelsHack.o
- .debug_line    0x0000000000000271       0x4e ./source/applySwitchesHook1.o
- .debug_line    0x00000000000002bf       0x4e ./source/applySwitchesHook2.o
- .debug_line    0x000000000000030d       0x4e ./source/applySwitchesHook3.o
+ .debug_line    0x0000000000000109      0x17d ./source/channelsHack.o
+ .debug_line    0x0000000000000286       0x4e ./source/applySwitchesHook1.o
+ .debug_line    0x00000000000002d4       0x4e ./source/applySwitchesHook2.o
+ .debug_line    0x0000000000000322       0x4e ./source/applySwitchesHook3.o
+ .debug_line    0x0000000000000370       0x53 ./source/igonreChannelCount.o
+ .debug_line    0x00000000000003c3       0x4f ./source/igonreChannelCount2.o
+ .debug_line    0x0000000000000412       0x4a ./source/disp6CHperPage.o
+ .debug_line    0x000000000000045c       0x4c ./source/loadSettingsHook.o
+ .debug_line    0x00000000000004a8       0xaf ./source/settingsHack.o
 
-.debug_info     0x0000000000000000      0x7b7
+.debug_info     0x0000000000000000      0xadc
  .debug_info    0x0000000000000000       0x53 ./source/start.o
- .debug_info    0x0000000000000053      0x241 ./source/main.o
- .debug_info    0x0000000000000294       0x64 ./source/ibus_telemetry.o
- .debug_info    0x00000000000002f8      0x39f ./source/channelsHack.o
- .debug_info    0x0000000000000697       0x60 ./source/applySwitchesHook1.o
- .debug_info    0x00000000000006f7       0x60 ./source/applySwitchesHook2.o
- .debug_info    0x0000000000000757       0x60 ./source/applySwitchesHook3.o
+ .debug_info    0x0000000000000053      0x230 ./source/main.o
+ .debug_info    0x0000000000000283       0x64 ./source/ibus_telemetry.o
+ .debug_info    0x00000000000002e7      0x3ff ./source/channelsHack.o
+ .debug_info    0x00000000000006e6       0x60 ./source/applySwitchesHook1.o
+ .debug_info    0x0000000000000746       0x60 ./source/applySwitchesHook2.o
+ .debug_info    0x00000000000007a6       0x60 ./source/applySwitchesHook3.o
+ .debug_info    0x0000000000000806       0x60 ./source/igonreChannelCount.o
+ .debug_info    0x0000000000000866       0x61 ./source/igonreChannelCount2.o
+ .debug_info    0x00000000000008c7       0x5c ./source/disp6CHperPage.o
+ .debug_info    0x0000000000000923       0x5e ./source/loadSettingsHook.o
+ .debug_info    0x0000000000000981      0x15b ./source/settingsHack.o
 
-.debug_abbrev   0x0000000000000000      0x2e3
+.debug_abbrev   0x0000000000000000      0x3f0
  .debug_abbrev  0x0000000000000000       0x14 ./source/start.o
  .debug_abbrev  0x0000000000000014       0xc0 ./source/main.o
  .debug_abbrev  0x00000000000000d4       0x26 ./source/ibus_telemetry.o
- .debug_abbrev  0x00000000000000fa      0x1ad ./source/channelsHack.o
- .debug_abbrev  0x00000000000002a7       0x14 ./source/applySwitchesHook1.o
- .debug_abbrev  0x00000000000002bb       0x14 ./source/applySwitchesHook2.o
- .debug_abbrev  0x00000000000002cf       0x14 ./source/applySwitchesHook3.o
+ .debug_abbrev  0x00000000000000fa      0x1b8 ./source/channelsHack.o
+ .debug_abbrev  0x00000000000002b2       0x14 ./source/applySwitchesHook1.o
+ .debug_abbrev  0x00000000000002c6       0x14 ./source/applySwitchesHook2.o
+ .debug_abbrev  0x00000000000002da       0x14 ./source/applySwitchesHook3.o
+ .debug_abbrev  0x00000000000002ee       0x14 ./source/igonreChannelCount.o
+ .debug_abbrev  0x0000000000000302       0x14 ./source/igonreChannelCount2.o
+ .debug_abbrev  0x0000000000000316       0x14 ./source/disp6CHperPage.o
+ .debug_abbrev  0x000000000000032a       0x14 ./source/loadSettingsHook.o
+ .debug_abbrev  0x000000000000033e       0xb2 ./source/settingsHack.o
 
-.debug_aranges  0x0000000000000000       0xf0
+.debug_aranges  0x0000000000000000      0x198
  .debug_aranges
                 0x0000000000000000       0x20 ./source/start.o
  .debug_aranges
@@ -289,29 +371,43 @@ OUTPUT(fs-i6x.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000040       0x18 ./source/ibus_telemetry.o
  .debug_aranges
-                0x0000000000000058       0x38 ./source/channelsHack.o
+                0x0000000000000058       0x40 ./source/channelsHack.o
  .debug_aranges
-                0x0000000000000090       0x20 ./source/applySwitchesHook1.o
+                0x0000000000000098       0x20 ./source/applySwitchesHook1.o
  .debug_aranges
-                0x00000000000000b0       0x20 ./source/applySwitchesHook2.o
+                0x00000000000000b8       0x20 ./source/applySwitchesHook2.o
  .debug_aranges
-                0x00000000000000d0       0x20 ./source/applySwitchesHook3.o
+                0x00000000000000d8       0x20 ./source/applySwitchesHook3.o
+ .debug_aranges
+                0x00000000000000f8       0x20 ./source/igonreChannelCount.o
+ .debug_aranges
+                0x0000000000000118       0x20 ./source/igonreChannelCount2.o
+ .debug_aranges
+                0x0000000000000138       0x20 ./source/disp6CHperPage.o
+ .debug_aranges
+                0x0000000000000158       0x20 ./source/loadSettingsHook.o
+ .debug_aranges
+                0x0000000000000178       0x20 ./source/settingsHack.o
 
-.debug_ranges   0x0000000000000000       0x38
+.debug_ranges   0x0000000000000000       0x50
  .debug_ranges  0x0000000000000000       0x10 ./source/main.o
- .debug_ranges  0x0000000000000010       0x28 ./source/channelsHack.o
+ .debug_ranges  0x0000000000000010       0x30 ./source/channelsHack.o
+ .debug_ranges  0x0000000000000040       0x10 ./source/settingsHack.o
 
-.debug_str      0x0000000000000000      0x31a
- .debug_str     0x0000000000000000      0x273 ./source/main.o
-                                        0x2ce (size before relaxing)
- .debug_str     0x0000000000000273       0x1b ./source/ibus_telemetry.o
+.debug_str      0x0000000000000000      0x39b
+ .debug_str     0x0000000000000000      0x267 ./source/main.o
+                                        0x2c2 (size before relaxing)
+ .debug_str     0x0000000000000267       0x1b ./source/ibus_telemetry.o
                                         0x14d (size before relaxing)
- .debug_str     0x000000000000028e       0x8c ./source/channelsHack.o
-                                        0x33f (size before relaxing)
+ .debug_str     0x0000000000000282       0xa7 ./source/channelsHack.o
+                                        0x34e (size before relaxing)
+ .debug_str     0x0000000000000329       0x72 ./source/settingsHack.o
+                                        0x1ca (size before relaxing)
 
-.debug_frame    0x0000000000000000       0x8c
+.debug_frame    0x0000000000000000       0xd0
  .debug_frame   0x0000000000000000       0x28 ./source/main.o
- .debug_frame   0x0000000000000028       0x64 ./source/channelsHack.o
+ .debug_frame   0x0000000000000028       0x80 ./source/channelsHack.o
+ .debug_frame   0x00000000000000a8       0x28 ./source/settingsHack.o
 
-.debug_loc      0x0000000000000000      0x158
- .debug_loc     0x0000000000000000      0x158 ./source/channelsHack.o
+.debug_loc      0x0000000000000000      0x174
+ .debug_loc     0x0000000000000000      0x174 ./source/channelsHack.o

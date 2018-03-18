@@ -7,13 +7,17 @@ C_SRCS += \
 ../source/main.c \
 ../source/ibus_telemetry.c \
 ../source/channelsHack.c \
-
+../source/settingsHack.c \
 
 ASM_SRCS += \
 ../source/start.asm \
 ../source/applySwitchesHook1.asm \
 ../source/applySwitchesHook2.asm \
-../source/applySwitchesHook3.asm
+../source/applySwitchesHook3.asm \
+../source/igonreChannelCount.asm \
+../source/igonreChannelCount2.asm \
+../source/disp6CHperPage.asm \
+../source/loadSettingsHook.asm
 
 OBJS += \
 ./source/start.o \
@@ -22,19 +26,28 @@ OBJS += \
 ./source/channelsHack.o  \
 ./source/applySwitchesHook1.o \
 ./source/applySwitchesHook2.o \
-./source/applySwitchesHook3.o
+./source/applySwitchesHook3.o \
+./source/igonreChannelCount.o \
+./source/igonreChannelCount2.o \
+./source/disp6CHperPage.o \
+./source/loadSettingsHook.o \
+./source/settingsHack.o \
 
 C_DEPS += \
 ./source/main.d \
 ./source/ibus_telemetry.d \
 ./source/channelsHack.d \
-
+./source/settingsHack.s \
 
 ASM_DEPS += \
 ./source/start.d \
 ./source/applySwitchesHook1.d \
 ./source/applySwitchesHook2.d \
 ./source/applySwitchesHook3.d \
+./source/igonreChannelCount.d \
+./source/igonreChannelCount2.d \
+./source/disp6CHperPage.d \
+./source/loadSettingsHook.d
 
 # Each subdirectory must supply rules for building sources it contributes
 source/%.o: ../source/%.c
