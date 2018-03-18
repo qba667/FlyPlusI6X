@@ -16,7 +16,7 @@
 
      if(channelsArray2Ref1==0){channelsArray2Ref1++;}
      if(channelsArray2BytesToCopy==0){channelsArray2BytesToCopy++;}
-     if(maxChannels==0){maxChannels++;}
+     //if(maxChannels==0){maxChannels++;}
  }
 
 /*
@@ -67,9 +67,19 @@ int mapSNR(){
  	snr = (snr * 645) - 10000;
  	return snr;
 }
+int mapError() {
+    int32_t value;
+ 	if(!getSensor2(IBUS_MEAS_TYPE_ERR, &value))  return -10000;
+    uint16_t error = value & 0xFFFF;
+    return ((100 - error) * 200) - 10000;
+}
 
 void applaySwitchesHook(int32_t targetArray[]){
     applaySwitches(targetArray);
     uint32_t maxChannels = *((int32_t *)MODEL_MAX_CHANNELS);
-    if(maxChannels >= 11) targetArray[10] = mapSNR();
+    for(uint32_t i = maxChannels +1; i <= TOTAL_CHANNELS; i++){
+        targetArray[i-1] = 0;
+    }
+    targetArray[10] = mapSNR();
+    targetArray[11] = mapError();
 }
