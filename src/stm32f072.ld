@@ -23,6 +23,21 @@ SECTIONS
     }
 
     . = ALIGN(1);
+    .mod_version_major 0x08004506: {
+        *(.mod_version_major);
+    }
+    .mod_version_minor 0x08004504: {
+        *(.mod_version_minor);
+    }
+    .mod_version_release 0x08004502: {
+        *(.mod_version_release);
+    }
+    .mod_version_build 0x08004500: {
+        *(.mod_version_build);
+    }
+
+
+
     .mod_channelsArrayRef1 0x08008BEC: {
         *(.mod_channelsArrayRef1);
     }
@@ -51,6 +66,28 @@ SECTIONS
         *(.mod_maxChannels);
     }
     . = ALIGN(2);
+
+
+
+    .mod_getSensorName 0x08006510 : {
+        *(.mod_getSensorName);
+        KEEP(*(.mod_getSensorName))
+    }
+
+    .mod_getSensorName2 0x080065FC : {
+        *(.mod_getSensorName2);
+        KEEP(*(.mod_getSensorName2))
+    }
+
+    .mod_formatSensor 0x080068B4 : {
+        *(.mod_formatSensor);
+        KEEP(*(.mod_formatSensor))
+    }
+
+    .mod_check4BytesSensor 0x080067EE : {
+        *(.mod_check4BytesSensor);
+        KEEP(*(.mod_check4BytesSensor))
+    }
 
     .mod_ignoreChannelCount 0x08008B3C : {
         *(.mod_ignoreChannelCount);

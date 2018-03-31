@@ -1,7 +1,6 @@
 -include ../makefile.init
-
+SHELL = /bin/bash
 RM := rm -rf
-
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include source/subdir.mk
@@ -37,19 +36,18 @@ endif
 
 -include ../makefile.defs
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 SECONDARY_FLASH += \
 fs-i6x.bin \
 
 SECONDARY_SIZE += \
 fs-i6x.siz \
 
-PARAMS = 
+PARAMS =
 
 # All Target
-all: fs-i6x.elf secondary-outputs 
+all: fs-i6x.elf secondary-outputs
 # Tool invocations
-
 fs-i6x.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
@@ -61,18 +59,18 @@ fs-i6x.bin: fs-i6x.elf
 	arm-none-eabi-objcopy --update-section .firstSection=org.bin "fs-i6x.elf"
 	#arm-none-eabi-objcopy --set-section-flags .firstSection=code,readonly,alloc "fs-i6x.elf"
 	arm-none-eabi-objcopy  -j .firstSection -j .mod_* -j .text -j .rodata -O binary "fs-i6x.elf" "fs-i6x.bin"
-	#python flysky2.py fs-i6.bin fs-i6
-	#python3 flysky3.py fs-i6x.bin fs-i6x
+	python3 fs-i6x.py fs-i6x.bin fs-i6x
 	@echo 'Finished building: $@'
 	@echo ' '
-	
+
 fs-i6x.siz: fs-i6x.elf
 	@echo 'Invoking: Cross ARM GNU Print Size'
 	arm-none-eabi-size --format=berkeley "fs-i6x.elf"
 	arm-none-eabi-size --format=sysv "fs-i6x.elf" -x
 	@echo 'Finished building: $@'
 	@echo ' '
-	
+updater:
+	python3 fs-i6x.py fs-i6x.bin fs-i6x
 # Other Targets
 clean:
 	-$(RM) $(SECONDARY_SIZE)$(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(SECONDARY_FLASH)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(S_UPPER_DEPS) fs-i6x.elf

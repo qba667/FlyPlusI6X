@@ -2,23 +2,6 @@
 #define MAX_SNR 40
 #define MIN_SNR 9
 
- void keepChannelHackReferences(){
-     for(uint32_t index = 0; index < TOTAL_CHANNELS; index++){
-        reallocatedChannelsData[index] = 1500;
-        reallocatedChannelsData2[index] = 1500;
-     }
-     if(channelsArrayRef1==0){channelsArrayRef1++;}
-     if(channelsArrayRef2==0){channelsArrayRef2++;}
-     if(channelsArrayRef3==0){channelsArrayRef3++;}
-     if(channelsArrayRef4==0){channelsArrayRef4++;}
-     if(channelsArrayRef5==0){channelsArrayRef5++;}
-     if(channelsArrayRef6==0){channelsArrayRef6++;}
-
-     if(channelsArray2Ref1==0){channelsArray2Ref1++;}
-     if(channelsArray2BytesToCopy==0){channelsArray2BytesToCopy++;}
-     //if(maxChannels==0){maxChannels++;}
- }
-
 /*
  int mapSNR(){
  	int snr = getSensorValue(IBUS_MEAS_TYPE_SNR);

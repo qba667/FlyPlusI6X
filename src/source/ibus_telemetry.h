@@ -51,7 +51,7 @@
 #define IBUS_MEAS_TYPE_S8a				0x8a
 
 
-//#define IBUS_MEAS_TYPE_ALT_FLYSKY		0xf9    // Altitude			//2 bytes signed in m
+#define IBUS_MEAS_TYPE_ALT_FLYSKY		0xf9    // Altitude			//2 bytes signed in m
 #define IBUS_MEAS_TYPE_SNR				0xfa    // SNR
 #define IBUS_MEAS_TYPE_NOISE			0xfb    // Noise
 #define IBUS_MEAS_TYPE_RSSI				0xfc    // RSSI
@@ -99,5 +99,26 @@ typedef struct sensorInfo {
     uint32_t value;
     uint32_t index_;
 } sensorInfo_s;
+
+//returns 2x 4 bytes sensor id, sensor value value, or 255 as first value if not found
+//080064C4 int * getSensorValue    (int *result, int id, int index)
+//returns sensor name from id
+//08006510  char* GetSensorName(signed int a1)
+//080149E6                 BL
+//08014A7A                 BL              GetSensorName
+//08014A96                 BL              GetSensorName
+//080164CA                 BL              GetSensorName
+
+
+
+
+//08006768 getSensorValueByIndex (int *result, unsigned int a2)
+//08006768 signed int __fastcall getSensorByIdIndex(int a1, int a2, unsigned int *a3)    return 0x7FFF;   return LOWORD(sensorArray[v3].value);
+
+//int __fastcall FormatSensorValue(signed int sensorID, int sensorIndex, _BYTE *bufferPtr)
+//return sprintf result
+
+//080067EE
+
 
 #endif /* SOURCE_IBUSTELEMETRY_H_ */

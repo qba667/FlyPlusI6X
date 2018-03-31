@@ -34,11 +34,8 @@ uint8_t getSensor2(int32_t id, int32_t* result);
 int mapSNR();
 void applaySwitchesHook(int32_t targetArray[]);
 
-/*
-int mapSNR();
-int mapError();
 
-*/
-
+//080067F6      BEQ loc_800681E -> 12 D0
+//uint16_t __attribute__((section (".mod_check4BytesSensorB"))) mod_check4BytesSensorB = 0xD012;
 
 #endif
