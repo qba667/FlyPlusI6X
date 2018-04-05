@@ -2,6 +2,7 @@
 #include "i6x.h"
 #include "channelsHack.h"
 #include "sensors.h"
+#include "alarms.h"
 #include "version.h"
  __attribute__((section (".remove_main"))) __attribute__((used)) int main(void) {
      for(uint32_t index = 0; index < TOTAL_CHANNELS; index++){
@@ -18,11 +19,15 @@
      if(channelsArray2Ref1==0){channelsArray2Ref1++;}
      if(channelsArray2BytesToCopy==0){channelsArray2BytesToCopy++;}
      //char* target, uint32_t sensorID, uint32_t value4Bytes, uint32_t value2Bytes
-     char test[5];
-    formatSensorValue(test, 1, 0,0);
+     uint32_t test[5];
+    formatSensorValue(test, 1, 0);
+    checkCustomAlarms();
     if(getSensorName(1) == 0){};
     if(version_major==0){version_major++;}
     if(version_minor==0){version_minor++;}
     if(version_release==0){version_release++;}
     if(version_build==0){version_build++;}
+    if(stack_addr==0){stack_addr++;}
+    if(alarmMethodPtr==0){alarmMethodPtr++;}
+
 }

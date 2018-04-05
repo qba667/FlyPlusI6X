@@ -11,7 +11,7 @@
 typedef void (*formatSensValFun)(int32_t sensorID, int32_t sensorIndex, char* bufferPtr);
 const formatSensValFun formatSensValOrg = (formatSensValFun)0x080067E4+1;
 uint32_t is4BytesSensor(uint32_t sensorID);
-int formatSensorValue(char* target, uint32_t index, uint32_t value4Bytes, uint32_t value2Bytes);
+void formatSensorValue(uint32_t* params, uint32_t value2Bytes,  uint32_t value4Bytes);
 __attribute__((section (".mod_getSensorName"))) const char * getSensorName(uint32_t sensor);
 __attribute__((section (".mod_getSensorName2"))) const char * getSensorName2(uint32_t sensor);
 

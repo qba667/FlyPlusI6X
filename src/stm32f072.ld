@@ -1,6 +1,6 @@
 MEMORY
 {
- ram (rwx) : ORIGIN = 0x20002990, LENGTH = 0x1670
+ ram (rwx) : ORIGIN = 0x20002760, LENGTH = 0xE30
  rom (rx) : ORIGIN = 0x801bc10, LENGTH = 0x43f0
  rom_org (RX) : ORIGIN = 0x08000000, LENGTH = 114785
 }
@@ -15,8 +15,10 @@ SECTIONS
 		KEEP(*(.firstSection))     /* Top of Stack */
 		. = ALIGN(1);
 	} > rom_org
-
-    .remove 0x08004000 : {
+    .mod_stack_addr 0x08004000: {
+        *(.mod_stack_addr);
+    }
+    .remove 0x08004004 : {
         *(.remove);
         *(.remove*)
         KEEP(*(.remove))
@@ -66,6 +68,10 @@ SECTIONS
         *(.mod_maxChannels);
     }
     . = ALIGN(2);
+
+    .mod_alarmMethodPtr 0x0800B468 : {
+        *(.mod_alarmMethodPtr);
+    }
 
 
 

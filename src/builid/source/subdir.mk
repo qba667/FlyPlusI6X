@@ -9,6 +9,7 @@ C_SRCS += \
 ../source/channelsHack.c \
 ../source/settingsHack.c \
 ../source/sensors.c \
+../source/alarms.c \
 
 ASM_SRCS += \
 ../source/start.asm \
@@ -19,6 +20,7 @@ ASM_SRCS += \
 ../source/igonreChannelCount2.asm \
 ../source/disp6CHperPage.asm \
 ../source/loadSettingsHook.asm \
+../source/formatSensor.asm \
 
 OBJS += \
 ./source/start.o \
@@ -34,7 +36,8 @@ OBJS += \
 ./source/sensors.o \
 ./source/loadSettingsHook.o \
 ./source/settingsHack.o \
-
+./source/formatSensor.o \
+./source/alarms.o \
 
 C_DEPS += \
 ./source/main.d \
@@ -42,6 +45,7 @@ C_DEPS += \
 ./source/channelsHack.d \
 ./source/settingsHack.d \
 ./source/sensors.d \
+./source/alarms.d \
 
 ASM_DEPS += \
 ./source/start.d \
@@ -52,6 +56,7 @@ ASM_DEPS += \
 ./source/igonreChannelCount2.d \
 ./source/disp6CHperPage.d \
 ./source/loadSettingsHook.d \
+./source/formatSensor.d \
 
 # Each subdirectory must supply rules for building sources it contributes
 source/%.o: ../source/%.c

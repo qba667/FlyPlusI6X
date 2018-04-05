@@ -48,7 +48,7 @@ typedef long long (*__aeabi_llsr_fun)(unsigned long long val, unsigned int shift
 typedef int (*sprintf_fun)(char* buffer, const char* format, ...);
 
 
-const __aeabi_uidiv_fun __aeabi_uidiv = (__aeabi_uidiv_fun)0x080000F1;
+const __aeabi_uidiv_fun __aeabi_uidiv = (__aeabi_uidiv_fun)0x080040F1;
 const __aeabi_idiv_fun __aeabi_idiv = (__aeabi_idiv_fun)0x0800411D;
 const __aeabi_uldivmod_fun __aeabi_uldivmod = (__aeabi_uldivmod_fun)0x08004145;
 const __aeabi_ldivmod_fun __aeabi_ldivmod = (__aeabi_ldivmod_fun)0x080041A5;
@@ -167,4 +167,57 @@ getSensorByIdIndex	.data	080067A4	00000038	0000000C	FFFFFFF4	R	.	.	.	.	.	.
 int __fastcall FormatSensorValue(signed int sensorID, int sensorIndex, _BYTE *bufferPtr)
 FormatSensorValue	.data	080067E4	0000024A	00000028	FFFFFFEC	R	.	.	.	.	T	.
 */
+
+/*
+0801483A
+SUB SP, SP, #76     93B0
+080149A8
+ADD R6, SP, #32     08AE
+
+0801485C
+ADD R0, SP, #64     10A8
+
+08014862
+LDR R0, [SP,#64]    1098
+
+08014864
+LDR R5, [SP,#68]    119D
+
+080149C6
+ADD R0, SP, #64     10A8
+
+080149CC
+LDR R0, [SP,#64]    1098
+
+080149DE
+STR R0, [SP,#64]    1090
+
+080149E4
+LDR R0, [SP,#64]    1098
+
+080149F8
+LDR R0, [SP,#64]    1098
+
+08014A2E
+ADD SP, SP, #76     13B0
+
+08014A58
+ADD R0, SP, #64     10A8
+
+08014A5E
+LDR R0, [SP,#64]    1098
+
+08014A68
+STR R0, [SP,#64]    1090
+
+08014A8E
+LDR R0, [SP,#64]    1098
+
+08014AD0                 
+ADD SP, SP, #76     13B0
+
+
+*/
+
+
 #endif

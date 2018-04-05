@@ -31,7 +31,7 @@ uint8_t __attribute__((section (".mod_channelsArray2BytesToCopy"))) channelsArra
 
  __attribute__((section (".remove_channelsHack"))) void keepChannelHackReferences();
 uint8_t getSensor2(int32_t id, int32_t* result);
-int mapSNR();
+int32_t mapSNR();
 void applaySwitchesHook(int32_t targetArray[]);
 
 
