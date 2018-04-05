@@ -7,7 +7,7 @@ import datetime
 
 def saveFile (name, data):
 	endAddress = len(data)-1024*8;
-	outFile = open(name + "_updater_" + time.strftime("%m_%d_%H_%M") + ".bin", 'wb')
+	outFile = open(name, 'wb')
 	outFile.write(data[0x4000:endAddress])
 	outFile.close()
 	

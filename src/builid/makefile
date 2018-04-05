@@ -38,39 +38,39 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables
 SECONDARY_FLASH += \
-fs-i6x.bin \
+fs-i6x_full.bin \
 
 SECONDARY_SIZE += \
-fs-i6x.siz \
+fs-i6x_full.siz \
 
 PARAMS =
 
 # All Target
-all: fs-i6x.elf secondary-outputs
+all: fs-i6x_full.elf secondary-outputs
 # Tool invocations
-fs-i6x.elf: $(OBJS) $(USER_OBJS)
+fs-i6x_full.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "../stm32f072.ld" -Xlinker --gc-sections -nodefaultlibs -nostartfiles -fno-builtin -nostdlib -lnosys -Wl,-Map,"fs-i6x.map" --specs=nano.specs -specs=nosys.specs -Xlinker -z -Xlinker muldefs -o "fs-i6x.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "../stm32f072.ld" -Xlinker --gc-sections -nodefaultlibs -nostartfiles -fno-builtin -nostdlib -lnosys -Wl,-Map,"fs-i6x_full.map" --specs=nano.specs -specs=nosys.specs -Xlinker -z -Xlinker muldefs -o "fs-i6x_full.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
-fs-i6x.bin: fs-i6x.elf
+fs-i6x_full.bin: fs-i6x_full.elf
 	@echo 'Invoking: Cross ARM GNU Create Flash Image'
-	arm-none-eabi-objcopy --update-section .firstSection=org.bin "fs-i6x.elf"
+	arm-none-eabi-objcopy --update-section .firstSection=org.bin "fs-i6x_full.elf"
 	#arm-none-eabi-objcopy --set-section-flags .firstSection=code,readonly,alloc "fs-i6x.elf"
-	arm-none-eabi-objcopy  -j .firstSection -j .mod_* -j .text -j .rodata -O binary "fs-i6x.elf" "fs-i6x.bin"
-	python3 fs-i6x.py fs-i6x.bin fs-i6x
+	arm-none-eabi-objcopy  -j .firstSection -j .mod_* -j .text -j .rodata -O binary "fs-i6x_full.elf" "fs-i6x_full.bin"
+	python3 fs-i6x.py fs-i6x_full.bin FS-I6X.bin
 	@echo 'Finished building: $@'
 	@echo ' '
 
-fs-i6x.siz: fs-i6x.elf
+fs-i6x_full.siz: fs-i6x_full.elf
 	@echo 'Invoking: Cross ARM GNU Print Size'
-	arm-none-eabi-size --format=berkeley "fs-i6x.elf"
-	arm-none-eabi-size --format=sysv "fs-i6x.elf" -x
+	arm-none-eabi-size --format=berkeley "fs-i6x_full.elf"
+	arm-none-eabi-size --format=sysv "fs-i6x_full.elf" -x
 	@echo 'Finished building: $@'
 	@echo ' '
 updater:
-	python3 fs-i6x.py fs-i6x.bin fs-i6x
+	python3 fs-i6x.py fs-i6x_full.bin FS-I6X.bin
 # Other Targets
 clean:
 	-$(RM) $(SECONDARY_SIZE)$(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(SECONDARY_FLASH)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(S_UPPER_DEPS) fs-i6x.elf
