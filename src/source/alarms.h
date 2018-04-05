@@ -1,4 +1,13 @@
+#ifndef ALARM_H_
+#define ALARM_H_
+#include <stdint.h>
+#include <stddef.h>
 
-#define VOLTAGE_ALARM_TIMER_TASK 0x0800B468
+typedef void (*checkAlarms_fun)();
+const checkAlarms_fun checkAlarms = (checkAlarms_fun)0x08018E00+1;
 
-#define VOLTAGE_ALARM_METHOD 0x08018E00+1;
+void checkCustomAlarms();
+
+uint32_t  __attribute__((section (".mod_alarmMethodPtr"))) alarmMethodPtr = (uint32_t)(&checkCustomAlarms+1);
+
+#endif
