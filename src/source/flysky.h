@@ -5,6 +5,23 @@
 #include <stdbool.h>
 
 
+#define IS_AFHDS2a 0x20001284
+#define IS_AFHDS2a 0x20001284
+#define VOLTAGE_ALARM_FLAG 0x200003D8
+#define VOLTAGE_ALARM_COUNT 0x200003D9
+#define BEEP_TASK_ID 0x200003D0
+
+typedef void (*checkAlarms_fun)();
+const checkAlarms_fun checkAlarms = (checkAlarms_fun)0x08018E00+1;
+typedef bool (*isTelemetryActive_fun)();
+const isTelemetryActive_fun isTelemetryActive = (isTelemetryActive_fun)0x0800F2B0+1;
+
+
+typedef void (*triggerInitMethod_2_fun)(uint32_t taskID, uint32_t* params, uint32_t paramsCount);
+const triggerInitMethod_2_fun triggerInitMethod_2 = (triggerInitMethod_2_fun)0x08018F24+1;
+
+
+
 typedef int (*__aeabi_uidiv_fun)(unsigned int num, unsigned int den);
 typedef int (*__aeabi_idiv_fun)(signed int num, signed int den);
 typedef long long (*__aeabi_uldivmod_fun)(uint64_t numerator, uint64_t denominator);
@@ -137,6 +154,8 @@ const read_EEPROM_fun readEEPROM = (read_EEPROM_fun)0x0800F379;
 const read_EEPROM_fun writeEEPROM = (read_EEPROM_fun)0x080192C5;
 
 
+
+
 uint32_t udivMod(uint32_t val, uint32_t divisor, uint32_t* mod){
 	uint32_t result = __aeabi_uidiv(val, divisor);
 	__asm("mov %[output], r1" : [output] "=r" (*mod));
@@ -147,6 +166,8 @@ int32_t divMod(int32_t val, int32_t divisor, uint32_t* mod){
 	__asm("mov %[output], r1" : [output] "=r" (*mod));
 	return result;
 }
+
+
 
 /*
 int *__fastcall getSensorValue(int *result, int id, int index)
@@ -213,7 +234,7 @@ STR R0, [SP,#64]    1090
 08014A8E
 LDR R0, [SP,#64]    1098
 
-08014AD0                 
+08014AD0
 ADD SP, SP, #76     13B0
 
 
