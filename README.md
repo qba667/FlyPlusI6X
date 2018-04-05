@@ -12,12 +12,45 @@ Telemetry data is working with IA6B, you can use my custom CleanFlight from:
 https://github.com/qba667/cleanflight/releases
 
 Or current branch of BetaFlight
+
 https://github.com/betaflight/betaflight/releases
 
-Selected sensors can be configured using CLI by setting array "ibus_sensor"
+Selected sensors can be configured using CLI by setting ibus_sensor array:
+
+```set ibus_sensor = 12,13,14,15,16,17,240,65,0,255,255,255,255,255,255```
+
 If sensor id assigned to this array equals 0 it means sensor is not configured. First occurrence of 0 is preventing further sensors usage.
 
+# Sensors IDs:
+
+| 2 Bytes          | ID            |
+| ---------------- | ------------- |
+| Temperature      | 1             |
+| RPM              | 2             |
+| External Voltage | 3             |
+| Avg Cell Voltage | 4             |
+| Battery current  | 5             |
+| Remaining batt.  | 6             |
+| Throttle         | 7             |
+| Heading          | 8             |
+| Climb rate       | 9             |
+| CoG              | 10            |
+| GPS status       | 11            |
+| ACC X            | 12            |
+| ACC Y            | 13            |
+| ACC Z            | 14            |
+| Roll             | 15            |
+| Pitch            | 16            |
+| Yaw              | 17            |
+| Vertical speed   | 18            |
+| Ground speed     | 19            |
+| GPS distnace     | 20            |
+| Armed            | 21            |
+| Flight mode      | 22            |
+
+
 MavlinkToIBUS can be also used in case of APM/Pixhawk
+
 https://github.com/qba667/MAVLinkToIbus
 
 
