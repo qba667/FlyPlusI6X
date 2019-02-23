@@ -124,6 +124,11 @@ SECTIONS
         *(.mod_loadSettingsHook);
         KEEP(*(.mod_loadSettingsHook))
     }
+    
+    .mod_channelsBugfixHook 0x08008416: {
+        *(.mod_channelsBugfixHook);
+        KEEP(*(.mod_channelsBugfixHook))
+    }
 
 
 

@@ -130,6 +130,7 @@ typedef int (*crc_fun)(unsigned int alwaysNull, uint8_t *buffer, unsigned int le
 typedef int (*display_header_fun)(char *str);
 typedef int (*beep_fun) (uint16_t freq, uint16_t time);
 typedef int (*read_EEPROM_fun)(uint32_t startOffset, uint8_t *target, uint32_t ength);
+typedef void (*spiSend_fun)(char *buf, int count);
 
 const void_fun clearLCD = (void_fun)0x08005D25;
 const gfx_fun displayGFX = (gfx_fun)0x08005D39;
@@ -153,7 +154,7 @@ const sprintf_fun sprintf_ = (sprintf_fun)0x0800A0B5;
 const read_EEPROM_fun readEEPROM = (read_EEPROM_fun)0x0800F379;
 const read_EEPROM_fun writeEEPROM = (read_EEPROM_fun)0x080192C5;
 
-
+const spiSend_fun spiSend = (spiSend_fun)0x08008D75;
 
 
 uint32_t udivMod(uint32_t val, uint32_t divisor, uint32_t* mod){
